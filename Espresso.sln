@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Console", "Espresso.Console\Espresso.Console.csproj", "{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso", "Espresso\Espresso.csproj", "{C164C48A-D7CB-43F1-A02F-7C994C067F3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.StandardHeader = $2
+		$2.Text = @\n This file is part of Espresso <https://github.com/piedar/Espresso>.\n\n Author(s):\n       ${AuthorName} <${AuthorEmail}>\n\n Copyright (c) ${Year} ${CopyrightHolder}\n\n Licensed under the Apache License, Version 2.0 (the "License");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an "AS IS" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.
+		$2.IncludeInNewFiles = True
+		description = Espresso keeps your computer awake.
+	EndGlobalSection
+EndGlobal
