@@ -36,6 +36,11 @@ namespace Espresso
 			get { return FlagHelper.IsFlagSet(_state, Kernel32.EXECUTION_STATE.ES_SYSTEM_REQUIRED); }
 			set
 			{
+				if (!(value ^ IsInhibited))
+				{
+					return; // Already there.
+				}
+
 				Kernel32.EXECUTION_STATE targetState = Kernel32.EXECUTION_STATE.ES_CONTINUOUS;
 
 				if (value)
@@ -53,6 +58,21 @@ namespace Espresso
 					throw new SleepInhibitorException(String.Format("Call to SetThreadExecutionState() failed to set targetState '{0}'.", targetState));
 				}
 			}
+		}
+
+		~Win32SleepInhibitor()
+		{
+			Dispose();
+		}
+
+		public void Dispose()
+		{
+			try
+			{
+				IsInhibited = false;
+				GC.SuppressFinalize(this);
+			}
+			catch { }
 		}
 	}
 

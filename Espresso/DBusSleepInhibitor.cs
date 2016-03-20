@@ -34,7 +34,7 @@ namespace Espresso
 		void UnInhibit(UInt32 cookie);
 	}
 
-	class DBusSleepInhibitor : ISleepInhibitor
+	sealed class DBusSleepInhibitor : ISleepInhibitor
 	{
 		private readonly IPowerManagementInhibit _pmInhibit;
 
@@ -58,6 +58,11 @@ namespace Espresso
 			}
 			set
 			{
+				if (!(value ^ IsInhibited))
+				{
+					return; // Already there.
+				}
+
 				if (value)
 				{
 					_cookie = _pmInhibit.Inhibit("Espresso", "Espresso keeps the computer awake.");
@@ -72,6 +77,21 @@ namespace Espresso
 					_cookie = null;
 				}
 			}
+		}
+
+		~DBusSleepInhibitor()
+		{
+			Dispose();
+		}
+
+		public void Dispose()
+		{
+			try
+			{
+				IsInhibited = false;
+				GC.SuppressFinalize(this);
+			}
+			catch { }
 		}
 	}
 }

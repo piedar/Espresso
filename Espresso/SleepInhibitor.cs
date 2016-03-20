@@ -22,70 +22,22 @@ using System.Diagnostics;
 
 namespace Espresso
 {
-	/// <summary>
-	/// A SleepInhibitor prevents the computer from automatically going to sleep.
-	/// </summary>
-	public sealed class SleepInhibitor : ISleepInhibitor, IDisposable
+	public static class SleepInhibitor
 	{
-		private readonly ISleepInhibitor _backend;
-
 		/// <summary>
-		/// Creates a new <see cref="SleepInhibitor"/> with the specified <paramref name="backend"/>.
+		/// Creates and activates a new <see cref="ISleepInhibitor"/> for the current platform.
 		/// </summary>
-		/// <param name="backend"></param>
-		public SleepInhibitor(ISleepInhibitor backend)
+		public static ISleepInhibitor StartNew()
 		{
-			if (backend == null) throw new ArgumentNullException("backend");
-			_backend = backend;
-		}
-
-		/// <summary>
-		/// Creates a new <see cref="SleepInhibitor"/> with an automatically-chosen backend.
-		/// </summary>
-		public SleepInhibitor()
-			: this(GetPlatformSleepInhibitor()) { }
-
-		/// <summary>
-		/// Creates and activates a new <see cref="SleepInhibitor"/> with an automatically-chosen backend.
-		/// </summary>
-		public static SleepInhibitor StartNew()
-		{
-			SleepInhibitor inhibitor = new SleepInhibitor();
+			ISleepInhibitor inhibitor = CreateNew();
 			inhibitor.IsInhibited = true;
 			return inhibitor;
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="SleepInhibitor"/> is inhibited.
+		/// Creates a new <see cref="ISleepInhibitor"/> for the current platform.
 		/// </summary>
-		public Boolean IsInhibited
-		{
-			get { return _backend.IsInhibited; }
-			set
-			{
-				if (value ^ IsInhibited)
-				{
-					_backend.IsInhibited = value;
-				}
-			}
-		}
-
-		~SleepInhibitor()
-		{
-			Dispose();
-		}
-
-		public void Dispose()
-		{
-			try
-			{
-				IsInhibited = false;
-				GC.SuppressFinalize(this);
-			}
-			catch { }
-		}
-
-		internal static ISleepInhibitor GetPlatformSleepInhibitor()
+		public static ISleepInhibitor CreateNew()
 		{
 			try
 			{

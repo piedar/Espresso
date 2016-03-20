@@ -21,8 +21,15 @@ using System;
 
 namespace Espresso
 {
-	public interface ISleepInhibitor
+	/// <summary>
+	/// An ISleepInhibitor prevents the computer from automatically going to sleep.
+	/// </summary>
+	public interface ISleepInhibitor : IDisposable
 	{
+		/// <summary>
+		/// Gets or sets a value indicating whether the <see cref="ISleepInhibitor"/> is keeping the computer awake.
+		/// </summary>
+		/// <exception cref="SleepInhibitorException">The <see cref="ISleepInhibitor"/> failed or is in an invalid state.</exception>
 		Boolean IsInhibited { get; set; }
 	}
 }

@@ -35,7 +35,7 @@ namespace Espresso.Console
 					cancellation.Cancel();
 				};
 
-			using (SleepInhibitor inhibitor = SleepInhibitor.StartNew())
+			using (ISleepInhibitor inhibitor = SleepInhibitor.StartNew())
 			{
 				System.Console.WriteLine("Espresso is keeping the computer awake.");
 				System.Console.WriteLine("Press Ctrl+C to exit.");
