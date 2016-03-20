@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.Console", "Espress
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso", "Espresso\Espresso.csproj", "{C164C48A-D7CB-43F1-A02F-7C994C067F3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Espresso.SystemTray", "Espresso.SystemTray\Espresso.SystemTray.csproj", "{BCF3CBF8-6854-4DCA-86BC-21FC9510A3F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AB7D4D1-9889-4EC6-A8D8-7E2C59EDD7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF3CBF8-6854-4DCA-86BC-21FC9510A3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF3CBF8-6854-4DCA-86BC-21FC9510A3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF3CBF8-6854-4DCA-86BC-21FC9510A3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF3CBF8-6854-4DCA-86BC-21FC9510A3F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C164C48A-D7CB-43F1-A02F-7C994C067F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
