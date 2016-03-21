@@ -18,27 +18,30 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 using System;
-using System.IO;
-using Gdk;
-using Gtk;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Espresso.SystemTray
 {
-	sealed class GtkTraySleepInhibitor : IGraphicalSleepInhibitor
+	sealed class WinformsTraySleepInhibitor : IGraphicalSleepInhibitor
 	{
-		static GtkTraySleepInhibitor()
+		static WinformsTraySleepInhibitor()
 		{
-			Application.Init();
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
 		}
 
-		private readonly StatusIcon _trayIcon = new StatusIcon();
+		private readonly NotifyIcon _trayIcon = new NotifyIcon();
 		private readonly ISleepInhibitor _sleepInhibitor = SleepInhibitor.CreateNew();
 
-		public GtkTraySleepInhibitor()
+		private readonly Icon _emptyCupIcon = new Icon(Icons.EmptyCupIconFile);
+		private readonly Icon _fullCupIcon = new Icon(Icons.FullCupIconFile);
+
+		public WinformsTraySleepInhibitor()
 		{
-			_trayIcon.File = Icons.EmptyCupFile;
-			_trayIcon.Activate += TrayIcon_Activate;
-			_trayIcon.PopupMenu += TrayIcon_PopupMenu;
+			_trayIcon.Icon = _emptyCupIcon;
+			_trayIcon.ContextMenuStrip = BuildMenu();
+			_trayIcon.MouseClick += TrayIcon_MouseClick;
 			_trayIcon.Visible = true;
 		}
 
@@ -51,31 +54,27 @@ namespace Espresso.SystemTray
 			set
 			{
 				_sleepInhibitor.IsInhibited = value;
-				_trayIcon.File = value ? Icons.FullCupFile : Icons.EmptyCupFile;
+				_trayIcon.Icon = value ? _fullCupIcon : _emptyCupIcon;
 			}
 		}
 
-
-		void TrayIcon_Activate(Object sender, EventArgs e)
+		void TrayIcon_MouseClick(Object sender, MouseEventArgs e)
 		{
-			IsInhibited = !IsInhibited;
+			if (e.Button == MouseButtons.Left)
+			{
+				IsInhibited = !IsInhibited;
+			}
 		}
 
-		void TrayIcon_PopupMenu(Object sender, PopupMenuArgs e)
+		ContextMenuStrip BuildMenu()
 		{
-			Menu popup = BuildMenu();
-			popup.ShowAll();
-			popup.Popup();
-		}
+			ContextMenuStrip menu = new ContextMenuStrip();
 
-		Menu BuildMenu()
-		{
-			Menu menu = new Menu();
-
-			ImageMenuItem quitItem = new ImageMenuItem("Quit");
-			quitItem.Image = new Image(Stock.Quit, IconSize.Menu);
-			quitItem.Activated += (Object sender, EventArgs e) => Application.Quit();
-			menu.Add(quitItem);
+			ToolStripItem quitItem = new ToolStripMenuItem();
+			quitItem.Text = "Quit";
+			//quitItem.Image
+			quitItem.Click += (Object sender, EventArgs e) => Application.Exit();
+			menu.Items.Add(quitItem);
 
 			return menu;
 		}
@@ -90,6 +89,8 @@ namespace Espresso.SystemTray
 			try
 			{
 				_trayIcon.Dispose();
+				_emptyCupIcon.Dispose();
+				_fullCupIcon.Dispose();
 				_sleepInhibitor.Dispose();
 				GC.SuppressFinalize(this);
 			}

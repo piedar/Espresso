@@ -18,22 +18,47 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 using System;
+using System.IO;
 using Gtk;
 
 namespace Espresso.SystemTray
 {
-	class Icons
+	interface IGraphicalSleepInhibitor : ISleepInhibitor
 	{
-		public static readonly String EmptyCupFile = System.IO.Path.Combine("Icons", "Empty_Cup.svg");
-		public static readonly String FullCupFile = System.IO.Path.Combine("Icons", "Full_Cup.svg");
+		void Run();
 	}
 
-	class MainClass
+	static class GraphicalSleepInhibitor
+	{
+		public static IGraphicalSleepInhibitor CreateNew()
+		{
+			try
+			{
+				return new GtkTraySleepInhibitor(); // GTK works great wherever it's available.
+			}
+			catch (TypeLoadException ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Failed to load GtkTraySleepInhibitor due to {ex}");
+				return new WinformsTraySleepInhibitor(); // Winforms are OK on Windows, but look awful everywhere else.
+			}
+		}
+	}
+
+	static class Icons
+	{
+		public static readonly String EmptyCupFile = Path.Combine("Icons", "Empty_Cup.svg");
+		public static readonly String FullCupFile = Path.Combine("Icons", "Full_Cup.svg");
+
+		public static readonly String EmptyCupIconFile = Path.Combine("Icons", "Empty_Cup.ico");
+		public static readonly String FullCupIconFile = Path.Combine("Icons", "Full_Cup.ico");
+	}
+
+	static class MainClass
 	{
 		[STAThread]
-		public static void Main(String[] args)
+		static void Main(String[] args)
 		{
-			using (GtkTraySleepInhibitor trayIcon = new GtkTraySleepInhibitor())
+			using (IGraphicalSleepInhibitor trayIcon = GraphicalSleepInhibitor.CreateNew())
 			{
 				trayIcon.Run();
 			}
