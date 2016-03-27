@@ -36,7 +36,7 @@ namespace Espresso.SystemTray
 			{
 				return new GtkTraySleepInhibitor(); // GTK works great wherever it's available.
 			}
-			catch (TypeLoadException ex)
+			catch (SystemException ex)
 			{
 				System.Diagnostics.Debug.WriteLine($"Failed to load GtkTraySleepInhibitor due to {ex}");
 				return new WinformsTraySleepInhibitor(); // Winforms are OK on Windows, but look awful everywhere else.

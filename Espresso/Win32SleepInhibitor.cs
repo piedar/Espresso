@@ -52,11 +52,12 @@ namespace Espresso
 					//}
 				}
 
-				_state = Kernel32.SetThreadExecutionState(targetState);
-				if (!FlagHelper.IsFlagSet(_state, targetState))
+				Kernel32.EXECUTION_STATE previousState = Kernel32.SetThreadExecutionState(targetState);
+				if (previousState == 0)
 				{
-					throw new SleepInhibitorException(String.Format("Call to SetThreadExecutionState() failed to set targetState '{0}'.", targetState));
+					throw new SleepInhibitorException($"Call to SetThreadExecutionState({targetState}) failed.");
 				}
+				_state = targetState;
 			}
 		}
 
